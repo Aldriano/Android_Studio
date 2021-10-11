@@ -1,1 +1,2 @@
-# CRUD com SQLite 
+# CRUD with SQLite 
+# Login with REST API
