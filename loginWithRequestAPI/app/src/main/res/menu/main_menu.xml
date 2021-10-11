@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuRelogio"
+        android:icon="@drawable/ic_alarme_branca"
+        android:orderInCategory="100"
+        android:title="Search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menuAbout"
+        android:title="About" />
+
+    <item
+        android:id="@+id/menuSettings"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/menuLogout"
+        android:title="Logout" />
+    <item
+        android:id="@+id/item3"
+        android:title="Item 3"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/subitem1"
+                android:title="Sub Item 1" />
+            <item
+                android:id="@+id/subitem2"
+                android:title="Sub Item 2" />
+        </menu>
+    </item>
+</menu>

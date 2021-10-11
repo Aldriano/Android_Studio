@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <ImageButton
+        android:id="@+id/btnDeletar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_delete_24_vermelha"
+        android:background="@color/white"/>
+
+    <ImageButton
+        android:id="@+id/btnEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnDeletar"
+        android:layout_toStartOf="@+id/btnDeletar"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_baseline_edit_24_azul"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/idLogin"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:layout_alignBaseline="@+id/btnEditar"
+        android:layout_alignBottom="@+id/btnEditar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+       />
+
+    <TextView
+        android:id="@+id/emailLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:layout_alignBaseline="@+id/idLogin"
+        android:layout_alignBottom="@+id/idLogin"
+        android:layout_toRightOf="@+id/idLogin"
+        android:layout_marginStart="7dp"
+        tools:ignore="UnknownId" />
+
+    <TextView
+        android:id="@+id/passwordLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:layout_alignBaseline="@+id/idLogin"
+        android:layout_alignBottom="@+id/idLogin"
+        android:layout_toRightOf="@+id/idLogin"
+        android:layout_marginStart="7dp"
+        tools:ignore="UnknownId"
+        android:visibility="gone"/>
+</RelativeLayout>
