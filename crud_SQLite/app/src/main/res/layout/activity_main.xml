@@ -84,7 +84,7 @@
                     android:text="@string/login"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:onClick="Login"/>
+                    android:onClick="LoginAPI"/>
 
                 <TextView
                     android:id="@+id/register"
@@ -109,6 +109,6 @@
         android:layout_marginTop="-50dp"
         android:background="@drawable/round_background"
         android:padding="15dp"
-        android:src="@drawable/profile"/>
+        android:src="@drawable/profile" />
 
 </RelativeLayout>

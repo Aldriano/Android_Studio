@@ -8,6 +8,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.aula.hotelaria.database.DBCore;
 
@@ -16,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     //Escopo global da classe
     private EditText edtUsuario;
     private EditText edtSenha;
+    private ImageView imageProfile;
 
     private DBCore mydb;
 
@@ -32,6 +55,24 @@ public class MainActivity extends AppCompatActivity {
         //controlar os widgets/Elementos de entrada  da UI
         edtUsuario = (EditText) findViewById(R.id.email);
         edtSenha = (EditText) findViewById(R.id.password);
+        imageProfile = (ImageView) findViewById(R.id.profile);
+        imageProfile.setTag(33); //access login in local test
+
+        //implemneta um duplo clique na imagem para alterar o modo de acesso: local or access Rest API in PHP
+        imageProfile.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (imageProfile.getTag().equals(33)) {
+                    imageProfile.setTag(44);   //access Rest API in cloud
+                    Toast.makeText(getApplicationContext(), "Access in cloud", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    imageProfile.setTag(33); // access local
+                    Toast.makeText(getApplicationContext(), "Access in local", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
     }
 
     public void Login(View v) {
@@ -60,6 +101,65 @@ public class MainActivity extends AppCompatActivity {
         //Util.Mensagem(this,"Em desenvolvimento", "titulo seu");
         startActivity(new Intent(MainActivity.this, CadastroLoginActivity.class));
 
+    }
+
+    public void LoginAPI(View view) {
+        if (imageProfile.getTag().equals(33)) {
+            Login(view); // Access local
+        } else{
+            ConsumirAPI();  // Access REST API in PHP
+         }
+    }
+
+    private void ConsumirAPI() {  //dica: transformar em uma classe
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String URL = "https://aldriano.com.br/unip2021-ads/api/validalogin.php";
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("UserName", edtUsuario.getText());
+            jsonBody.put("UserPwd", edtSenha.getText());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //System.out.println(response);
+                try{
+                    String isStatus = response.getString("status");
+                    if (isStatus.equalsIgnoreCase("ok")) {
+                        chamarMenu();
+                    }
+                }catch (JSONException e){
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //error.printStackTrace();
+                String responseBody="";
+                try {
+                    responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    Toast.makeText(getApplicationContext(),jsonObject.getString("error"),Toast.LENGTH_LONG).show();
+                }catch (Exception erro){
+                    Toast.makeText(getApplicationContext(),"Exception: "+responseBody,Toast.LENGTH_LONG).show();
+                    Log.v("minhaTAG", responseBody);
+                }
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+        //#DICAS: https://stackoverflow.com/questions/67647393/post-request-with-volley-with-headers-and-body-java-android-studio
+        // https://nabeelj.medium.com/making-a-simple-get-and-post-request-using-volley-beginners-guide-ee608f10c0a9
+    }
+
+    public  void chamarMenu(){
+        Intent janelaMenu = new Intent(MainActivity.this, MenuActivity.class);
+        startActivity(janelaMenu);
     }
 
 }

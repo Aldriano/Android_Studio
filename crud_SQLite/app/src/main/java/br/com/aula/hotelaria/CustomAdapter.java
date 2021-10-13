@@ -46,19 +46,18 @@ public class CustomAdapter extends SimpleCursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         super.bindView(view, context, cursor);
         final int row_id = cursor.getInt(cursor.getColumnIndex("_id"));
+        final String row_email    = cursor.getString(cursor.getColumnIndex("email"));
+        final String row_password = cursor.getString(cursor.getColumnIndex("password"));
 
         ImageButton btnEditar = (ImageButton) view.findViewById(R.id.btnEditar);
         btnEditar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.v("minhaTAG", "passei CustomAdapter Editar");
                 //https://stackoverflow.com/questions/3477422/what-does-layoutinflater-in-android-do
                 //Esta classe é usada para instanciar o arquivo XML de layout em seus Viewobjetos correspondentes .
                 // Nunca deve ser usado diretamente - use getLayoutInflater()ou getSystemService(String)para recuperar uma
                 // LayoutInflaterinstância padrão que já está conectada ao contexto atual e configurada corretamente para o
                 // dispositivo em que você está executando
-                LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final String row_email = cursor.getString(cursor.getColumnIndex("email"));
-                final String row_password = cursor.getString(cursor.getColumnIndex("password"));
+                LayoutInflater mInflater  = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 ConsultaLoginActivity.showDialogAtualizar(mInflater,row_id, row_email,row_password);
             }
         });
@@ -71,7 +70,6 @@ public class CustomAdapter extends SimpleCursorAdapter {
             }
         });
     }
-
 
     private void confirmarExclusao(Context context, int id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

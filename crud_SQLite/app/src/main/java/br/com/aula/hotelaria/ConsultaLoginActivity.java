@@ -87,11 +87,12 @@ public class ConsultaLoginActivity extends AppCompatActivity {
             builder.setView(dialogView );
 
             EditText edtId    = (EditText) dialogView.findViewById(R.id.idLoginAtualiza);
-            EditText edtEmail = (EditText) dialogView.findViewById(R.id.idLoginAtualiza);
-            EditText edtPwd   = (EditText) dialogView.findViewById(R.id.emailLoginAtualiza);
+            EditText edtEmail = (EditText) dialogView.findViewById(R.id.emailLoginAtualiza);
+            EditText edtPwd   = (EditText) dialogView.findViewById(R.id.senhaLoginAtualiza);
             edtId.setText( Integer.toString(_id));
             edtEmail.setText(email);
             edtPwd.setText(pwd);
+            Log.v("minhaTAG"," ao mostrar o dialog ID= "+Integer.toString(_id)+"Email= "+edtEmail.getText());
 
             // Add OK button
             builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
@@ -99,7 +100,13 @@ public class ConsultaLoginActivity extends AppCompatActivity {
                     // User clicked OK button
                     //input = edit.getText().toString();
                     //text.setText(input);
-                    Util.Mensagem(context,"Atualizado com sucesso!","Atenção");
+                    if (mydb.updatelogin(_id,edtEmail.getText().toString(),edtPwd.getText().toString())){
+                        ConsultaLoginActivity.atualizaListView();
+                        Util.Mensagem(context,"Atualizado com sucesso!","Atenção");
+                    }else {
+                        Util.Mensagem(context,"Ocorreu um erro ao Atualizar!","Atenção");
+
+                    }
 
                 }
             });
